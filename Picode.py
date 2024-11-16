@@ -9,13 +9,13 @@ import numpy as np
 from threading import Thread
 
 # Setup for relay control
-CHIP_NAME = "gpiochip0"
+CHIP_NAME = "gpiochip4"
 RELAY_PIN_A = 17  # GPIO pin for Plant A relay
 RELAY_PIN_B = 27  # GPIO pin for Plant B relay
 
 # Thresholds for each plant
-THRESHOLD_A = 500  # Threshold for Plant A
-THRESHOLD_B = 600  # Threshold for Plant B
+THRESHOLD_A = 600  # Threshold for Plant A
+THRESHOLD_B = 700  # Threshold for Plant B
 
 # UDP settings
 LOCAL_IP = "0.0.0.0"  # Listen on all interfaces
@@ -29,14 +29,14 @@ long_term_data_b = []
 
 # Function to control pumps
 def control_pumps(chip, line_a, line_b, moisture_a, moisture_b):
-    if moisture_a < THRESHOLD_A:
+    if moisture_a > THRESHOLD_A:
         line_a.set_value(0)
         print("Pump A ON: Moisture below threshold.")
     else:
         line_a.set_value(1)
         print("Pump A OFF: Moisture above threshold.")
 
-    if moisture_b < THRESHOLD_B:
+    if moisture_b > THRESHOLD_B:
         line_b.set_value(0)
         print("Pump B ON: Moisture below threshold.")
     else:
